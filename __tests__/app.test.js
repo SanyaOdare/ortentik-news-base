@@ -13,7 +13,7 @@ afterAll(() => {
   return db.end();
 });
 
-describe.skip('GET /api/topics', () => {
+describe('GET /api/topics', () => {
   test('200 - responds with an array of topic objects', () => {
     return request(app)
     .get('/api/topics')
@@ -25,12 +25,12 @@ describe.skip('GET /api/topics', () => {
         expect(typeof topic.description).toBe('string');
         expect(typeof topic.slug).toBe('string');
       })
-      console.log(body);
+      // console.log(body);
     });
   });
 });
 
-describe.only('GET /api', () => {
+describe('GET /api', () => {
   test('200 - responds with endpoint JSON data', () => {
     return request(app)
       .get('/api')
