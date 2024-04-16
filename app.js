@@ -1,8 +1,13 @@
 const express = require('express');
 const app = express();
 const { getTopics } = require('./controllers/topics.controllers');
-// app.use(express.json());
+const endpoints = require('./endpoints.json');
+
 app.get('/api/topics', getTopics);
+
+app.get('/api', (req, res) => {
+  res.status(200).send({ endpoints: endpoints });
+});
 
 // middleware handle error here
 app.use((req, res, next) => {
