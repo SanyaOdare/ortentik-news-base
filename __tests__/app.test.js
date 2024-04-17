@@ -25,7 +25,6 @@ describe('GET /api/topics', () => {
         expect(typeof topic.description).toBe('string');
         expect(typeof topic.slug).toBe('string');
       })
-      // console.log(body);
     });
   });
 });

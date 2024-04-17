@@ -5,7 +5,6 @@ function fetchTopics() {
     .query(`SELECT * FROM topics`)
     .then((data) => {
       const topics = data.rows;
-      // console.log(topics, '<---- in database');
       return topics;
   });
 }
