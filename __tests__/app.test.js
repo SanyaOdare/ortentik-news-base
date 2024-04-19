@@ -47,27 +47,37 @@ describe('GET /api/articles/:article_id', () => {
     return request(app)
     .get('/api/articles/1')
     .expect(200)
-    .then(({ body }) => {
-      const { data } = body;
-      expect(typeof data).toBe('object')
-      expect(typeof data.author).toBe('string');
-      expect(typeof data.title).toBe('string');
-      expect(typeof data.article_id).toBe('number');
-      expect(typeof data.body).toBe('string');
-      expect(typeof data.topic).toBe('string');
-      expect(typeof data.created_at).toBe('string');
-      expect(typeof data.votes).toBe('number');
-      expect(typeof data.article_img_url).toBe('string');
+    .then(({ body: { data }}) => {
+      expect(data).toEqual({
+        article_id: 1,
+        title: 'Living in the shadow of a great man',
+        topic: "mitch",
+        author: 'butter_bridge',
+        body: "I find this existence challenging",
+        votes: 100,
+        created_at: '2020-07-09T20:11:00.000Z',
+        article_img_url: 'https://images.pexels.com/photos/158651/news-newsletter-newspaper-information-158651.jpeg?w=700&h=700'
+      })
     })
   })
 
-  test('404 - responds with an error when article_id doesn\'t exist', () => {
+  test('400 bad request- responds with an error when article id is not a number', () => {
+    return request(app)
+    .get('/api/articles/richardB')
+    .expect(400)
+    .then(({ body }) => {
+      const { message } = body      
+      expect(message).toBe('Bad request')
+    })
+  })
+
+  test('404 - responds with an error when article id doesn\'t exist', () => {
     return request(app)    
-    .get('/api/articles/12/article')
+    .get('/api/articles/9999')
     .expect(404)
     .then(({ body }) => {
       const { message } = body
       expect(message).toBe('article_id not found');
     });
-  });
+  });  
 })

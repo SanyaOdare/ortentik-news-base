@@ -16,12 +16,18 @@ app.get('/api/articles/', getArticles);
 
 app.get('/api/articles/:article_id', getArticlesById);
 
-app.use((req, res, next) => {
-  res.status(404).send({message: 'article_id not found'});
+app.use((err, req, res, next) => {
+  if (err.code === '22P02') {
+    res.status(400).send({ message: 'Bad request' });
+  } else if (err.status && err.message) {
+    res.status(err.status).send({message: err.message});
+  } else {
+    next(err);
+  }
 });
 
 // middleware handle error here
-app.use((req, res, next) => {
+app.use((err, req, res, next) => {
   res.status(500).send({message: 'Internal Server Error'});
 });
 
